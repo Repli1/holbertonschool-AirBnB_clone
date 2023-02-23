@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import uuid
-import datetime
+from datetime import datetime
 """define a class Base model"""
 
 
@@ -12,18 +12,18 @@ class BaseModel:
                 if key == 'id':
                     self.id = str(v)
                 if key == 'update_at':
-                    self.update_at = v.isoformat()
+                    self.update_at = datetime.fromisoformat(v)
                 if key == 'created_at':
-                    self.created_at = v.isoformat()
+                    self.created_at = datetime.fromisoformat(v)
         else:
             no_str_id = uuid.uuid4()
             self.id = str(no_str_id)
-            self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def save(self):
         """update the atribute update_at"""
-        self.update_at = datetime.datetime.now()
+        self.update_at = datetime.now()
 
     def to_dict(self):
         """return a dict from the instance"""
