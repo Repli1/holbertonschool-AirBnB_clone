@@ -15,16 +15,15 @@ class BaseModel:
                     update_at = v.isoformat()
                 if key == 'created_at':
                     created_at = v.isoformat()
-
         else:
-            no_str_id = uuid.uuid4
-            id_str = str(no_str_id)
-            created_at = datetime.now()
-            updated_at = datetime.now()
+            no_str_id = uuid.uuid4()
+            self.id_str = str(no_str_id)
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
 
     def save(self):
         """update the atribute update_at"""
-        update_at = datetime.now()
+        update_at = datetime.datetime.now()
 
     def to_dict(self):
         """return a dict from the instance"""
