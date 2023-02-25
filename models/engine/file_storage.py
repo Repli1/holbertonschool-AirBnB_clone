@@ -1,9 +1,7 @@
-
 #!/usr/bin/python3
 """"""
 import json
-import os.path
-
+from os import path
 
 class FileStorage:
     """"""
@@ -13,12 +11,20 @@ class FileStorage:
     def all(self):
         return FileStorage.__objects
     def new(self, obj):
-        FileStorage.__objects.append(obj, obj.id)
+        FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
     def save(self):
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            write_data = f.write(json.dumps(FileStorage.__objects))
+        storage_copy = FileStorage.__objects.copy()
+        for key, value in storage_copy.items():
+            storage_copy[key] = value.to_dict()
+        with open(FileStorage.__file_path, 'w', encoding="utf-8") as f:
+            json.dump(storage_copy, f)
     def reload(self):
-        if os.path.exists(FileStorage.__file_path):
+        from models.base_model import BaseModel
+        FileStorage.__objects.clear()
+        storage_copy = {}
+        if path.exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
-                read_data = f.read()
-            return json.loads(read_data)
+              storage_copy = json.load(f)
+        for key, value in storage_copy.items():
+            storage_copy[key] = BaseModel(**value)
+        FileStorage.__objects = storage_copy

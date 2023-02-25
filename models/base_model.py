@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
-from models.__init__ import storage
+from models import storage
 """define a class Base model"""
 
 
@@ -12,8 +12,8 @@ class BaseModel:
             for key, v in kwargs.items():
                 if key == 'id':
                     self.id = str(v)
-                if key == 'update_at':
-                    self.update_at = datetime.fromisoformat(v)
+                if key == 'updated_at':
+                    self.updated_at = datetime.fromisoformat(v)
                 if key == 'created_at':
                     self.created_at = datetime.fromisoformat(v)
         else:
@@ -21,10 +21,11 @@ class BaseModel:
             self.id = str(no_str_id)
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def save(self):
         """update the atribute update_at"""
-        self.update_at = datetime.now()
+        self.updated_at = datetime.now()
         storage.save()
 
     def to_dict(self):
@@ -37,3 +38,4 @@ class BaseModel:
 
     def __str__(self):
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+
