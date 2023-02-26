@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models.__init__ import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -23,18 +24,21 @@ class HBNBCommand(cmd.Cmd):
     
   def do_create(self, arg):
     """Creates a new instance of BaseModel, saves it, and prints the id"""
+    list_of_class = {'BaseModel': BaseModel, 'User': User}
     if arg == "":
       print("** class name missing **")
       return
-    elif arg != "BaseModel":
+    elif arg not in list_of_class:
       print("** class doesn't exist **")
     else:
-      arg = BaseModel()
-      arg.save()
-      print(arg.id)
+      if arg in list_of_class:
+        arg = list_of_class[arg]()
+        arg.save()
+        print(arg.id)
       
   def do_show(self, arg):
     """"""
+    list_of_class = ['BaseModel', 'User']
     args = arg.split()
     if len(args) == 0:
       class_of_instance = ""
@@ -43,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
     if class_of_instance == "":
       print("** class name missing **")
       return
-    if class_of_instance != "BaseModel":
+    if class_of_instance not in list_of_class:
       print("** class doesn't exist **")
       return
     if len(args) == 1:
@@ -59,6 +63,7 @@ class HBNBCommand(cmd.Cmd):
           
   def do_destroy(self, arg):
     """"""
+    list_of_class = ['BaseModel', 'User']
     args = arg.split()
     if len(args) == 0:
       class_of_instance = ""
@@ -67,7 +72,7 @@ class HBNBCommand(cmd.Cmd):
     if class_of_instance == "":
       print("** class name missing **")
       return
-    if class_of_instance != "BaseModel":
+    if class_of_instance not in list_of_class:
       print("** class doesn't exist **")
       return
     if len(args) == 1:
@@ -95,6 +100,7 @@ class HBNBCommand(cmd.Cmd):
   def do_update(self, arg):
     """"""
     args = arg.split()
+    list_of_class = ['BaseModel', 'User']
     if len(args) == 0:
       class_of_instance = ""
     else:
@@ -102,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
     if class_of_instance == "":
       print("** class name missing **")
       return
-    if class_of_instance != "BaseModel":
+    if class_of_instance not in list_of_class:
       print("** class doesn't exist **")
       return
     if len(args) == 1:
@@ -123,3 +129,6 @@ class HBNBCommand(cmd.Cmd):
     attribute_value = args[3]
     setattr(storage.all()[key], attribute_name, attribute_value)
     storage.save()
+
+if __name__ == '__main__':
+  HBNBCommand().cmdloop()
