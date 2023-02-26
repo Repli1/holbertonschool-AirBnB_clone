@@ -55,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
         if key not in storage.all().keys():
           print("** no instance found **")
         else:
-          print(key)
+          print(storage.all()[key])
           
   def do_destroy(self, arg):
     """"""
@@ -82,7 +82,49 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
           print("** no instance found")
-       
+
+  def do_all(self, arg):
+    """"""
+    my_list = []
+    if arg == "":
+      for key, value in storage.all().items():
+        my_list.append(BaseModel.__str__(value))
+      print(my_list)
+    #Añadir para más clases (Ejemplo: all Auto)
+
+  def do_update(self, arg):
+    """"""
+    if arg == "":
+      raise ValueError("Class name and id is needed")
+    else:
+      args = arg.split()
+      class_of_instance = args[0]
+      if class_of_instance == "":
+        print("** class name missing **")
+        return
+      if class_of_instance != "BaseModel":
+        print("** class doesn't exist **")
+        return
+      if len(args) == 1:
+        print("** instance id missing **")
+        return
+      id_of_instance = args[1]
+      key = f"{class_of_instance}.{id_of_instance}"
+      if key not in storage.all().keys():
+        print("** no instance found **")
+        return
+      if len(args) == 2:
+        print("** attribute name missing **")
+        return
+      if len(args) == 3:
+        print("** value missing **")
+        return
+      attribute_name = args[2]
+      attribute_value = args[3]
+      setattr(storage.all()[key], attribute_name, attribute_value)
+      storage.save()
+      print("saved!")
+  
     
     
     
@@ -93,4 +135,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
   HBNBCommand().cmdloop()
-
