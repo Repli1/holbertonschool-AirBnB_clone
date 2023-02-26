@@ -35,53 +35,53 @@ class HBNBCommand(cmd.Cmd):
       
   def do_show(self, arg):
     """"""
-    if arg == "":
-      raise ValueError("Class name and id is needed")
+    args = arg.split()
+    if len(args) == 0:
+      class_of_instance = ""
     else:
-      args = arg.split()
       class_of_instance = args[0]
-      if class_of_instance == "":
-        print("** class name missing **")
-        return
-      if class_of_instance != "BaseModel":
-        print("** class doesn't exist ** ")
-        return
-      if len(args) == 1:
-        print("** instance id missing **")
-        return
+    if class_of_instance == "":
+      print("** class name missing **")
+      return
+    if class_of_instance != "BaseModel":
+      print("** class doesn't exist **")
+      return
+    if len(args) == 1:
+      print("** instance id missing **")
+      return
+    else:
+      id_of_instance = args[1]
+      key = f"{class_of_instance}.{id_of_instance}"
+      if key not in storage.all().keys():
+        print("** no instance found **")
       else:
-        id_of_instance = args[1]
-        key = f"{class_of_instance}.{id_of_instance}"
-        if key not in storage.all().keys():
-          print("** no instance found **")
-        else:
-          print(storage.all()[key])
+        print(storage.all()[key])
           
   def do_destroy(self, arg):
     """"""
-    if arg == "":
-      raise ValueError("Class name and id is needed")
+    args = arg.split()
+    if len(args) == 0:
+      class_of_instance = ""
     else:
-      args = arg.split()
       class_of_instance = args[0]
-      if class_of_instance == "":
-        print("** class name missing **")
-        return
-      if class_of_instance != "BaseModel":
-        print("** class doesn't exist ** ")
-        return
-      if len(args) == 1:
-        print("** instance id missing **")
-        return
+    if class_of_instance == "":
+      print("** class name missing **")
+      return
+    if class_of_instance != "BaseModel":
+      print("** class doesn't exist **")
+      return
+    if len(args) == 1:
+      print("** instance id missing **")
+      return
+    else:
+      id_of_instance = args[1]
+      key = f"{class_of_instance}.{id_of_instance}"
+      if key in storage.all().keys():
+          del storage.all()[key]
+          print("Object deleted")
+          storage.save()
       else:
-        id_of_instance = args[1]
-        key = f"{class_of_instance}.{id_of_instance}"
-        if key in storage.all().keys():
-            del storage.all()[key]
-            print("Object deleted")
-            storage.save()
-        else:
-          print("** no instance found")
+        print("** no instance found **")
 
   def do_all(self, arg):
     """"""
@@ -94,44 +94,32 @@ class HBNBCommand(cmd.Cmd):
 
   def do_update(self, arg):
     """"""
-    if arg == "":
-      raise ValueError("Class name and id is needed")
+    args = arg.split()
+    if len(args) == 0:
+      class_of_instance = ""
     else:
-      args = arg.split()
       class_of_instance = args[0]
-      if class_of_instance == "":
-        print("** class name missing **")
-        return
-      if class_of_instance != "BaseModel":
-        print("** class doesn't exist **")
-        return
-      if len(args) == 1:
-        print("** instance id missing **")
-        return
-      id_of_instance = args[1]
-      key = f"{class_of_instance}.{id_of_instance}"
-      if key not in storage.all().keys():
-        print("** no instance found **")
-        return
-      if len(args) == 2:
-        print("** attribute name missing **")
-        return
-      if len(args) == 3:
-        print("** value missing **")
-        return
-      attribute_name = args[2]
-      attribute_value = args[3]
-      setattr(storage.all()[key], attribute_name, attribute_value)
-      storage.save()
-      print("saved!")
-  
-    
-    
-    
-    
-    
-    
-
-
-if __name__ == '__main__':
-  HBNBCommand().cmdloop()
+    if class_of_instance == "":
+      print("** class name missing **")
+      return
+    if class_of_instance != "BaseModel":
+      print("** class doesn't exist **")
+      return
+    if len(args) == 1:
+      print("** instance id missing **")
+      return
+    id_of_instance = args[1]
+    key = f"{class_of_instance}.{id_of_instance}"
+    if key not in storage.all().keys():
+      print("** no instance found **")
+      return
+    if len(args) == 2:
+      print("** attribute name missing **")
+      return
+    if len(args) == 3:
+      print("** value missing **")
+      return
+    attribute_name = args[2]
+    attribute_value = args[3]
+    setattr(storage.all()[key], attribute_name, attribute_value)
+    storage.save()
