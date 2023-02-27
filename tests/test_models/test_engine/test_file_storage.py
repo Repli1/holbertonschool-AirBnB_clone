@@ -4,6 +4,7 @@ from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class TestFileStorage(unittest.TestCase):
@@ -31,9 +32,18 @@ class TestFileStorage(unittest.TestCase):
         fs = FileStorage()
         self.assertEqual(type(fs._FileStorage__objects), dict)
 
-    def test_all(self):
-        fs = FileStorage()
-        self.assertEqual(fs.all(), fs._FileStorage__objects)
+    def test_all_and_save(self):
+        model_id = uuid.uuid4()
+        u_at = "2012-06-14T22:31:03.285259"
+        c_at = "2012-06-14T22:31:03.285259"
+        bm = BaseModel(id=model_id, created_at=c_at, updated_at=u_at)
+        storage.new(bm)
+        bm.save()
+        key = f"{bm.__class__.__name__}.{bm.id}"
+        obj_dict = storage.all()[key].to_dict()
+        self.assertNotEqual(obj_dict['updated_at'], u_at)
+        self.assertEqual(bm.updated_at.isoformat(), obj_dict['updated_at'])
+        self.assertEqual(storage.all(), storage._FileStorage__objects)
 
     def test_new(self):
         model_id = uuid.uuid4()
