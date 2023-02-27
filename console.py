@@ -77,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        list_of_class = ['BaseModel', 'User', 'Place', 
+        list_of_class = ['BaseModel', 'User', 'Place',
                          'State', 'City', 'Amenity', 'Review']
         args = arg.split()
         if len(args) == 0:
@@ -112,7 +112,7 @@ class HBNBCommand(cmd.Cmd):
             "City": City,
             "Amenity": Amenity,
             "Review": Review,
-            "User" : User
+            "User": User
             }
         my_list = []
         if arg == "":
@@ -133,7 +133,8 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         args = arg.split()
-        list_of_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
+        list_of_class = ['BaseModel', 'User', 'Place', 'State',
+                         'City', 'Amenity', 'Review']
         if len(args) == 0:
             class_of_instance = ""
         else:
