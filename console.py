@@ -36,7 +36,7 @@ class HBNBCommand(cmd.Cmd):
             "City": City,
             "Amenity": Amenity,
             "Review": Review,
-            "User" : User
+            "User": User
             }
         if arg == "":
             print("** class name missing **")
@@ -50,8 +50,9 @@ class HBNBCommand(cmd.Cmd):
                 print(arg.id)
 
     def do_show(self, arg):
-        """Prints the string representation of an instance based on its class"""
-        cls = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
+        """Prints string representation of an instance based on its class"""
+        cls = ['BaseModel', 'User', 'Place', 'State',
+               'City', 'Amenity', 'Review']
         args = arg.split()
         if len(args) == 0:
             class_of_instance = ""
@@ -76,7 +77,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Deletes an instance based on the class name and id"""
-        list_of_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
+        list_of_class = ['BaseModel', 'User', 'Place', 
+                         'State', 'City', 'Amenity', 'Review']
         args = arg.split()
         if len(args) == 0:
             class_of_instance = ""
@@ -102,7 +104,7 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
 
     def do_all(self, arg):
-         """Prints all string representation of all instances"""
+        """Prints all string representation of all instances"""
         list_of_class = {
             "BaseModel": BaseModel,
             "Place": Place,
