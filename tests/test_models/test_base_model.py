@@ -2,14 +2,20 @@
 import unittest
 from models.base_model import BaseModel
 from models import storage
+import uuid
 
 
 class TestBaseModel(unittest.TestCase):
     def test_save(self):
-        bm = BaseModel()
+        model_id = uuid.uuid4()
+        u_at = "2022-06-14T22:31:03.285259"
+        c_at = "2022-06-14T22:31:03.285259"
+        bm = BaseModel(id=model_id, created_at=c_at, updated_at=u_at)
+        storage.new(bm)
         bm.save()
         key = f"{bm.__class__.__name__}.{bm.id}"
         obj_dict = storage.all()[key].to_dict()
+        self.assertNotEqual(obj_dict['updated_at'], u_at)
         self.assertEqual(bm.updated_at.isoformat(), obj_dict['updated_at'])
 
     def test_to_dict(self):
