@@ -2,6 +2,7 @@
 """define a class Place"""
 from models.base_model import BaseModel
 
+
 class Place(BaseModel):
     """Class Place that inherit from BaseModel"""
     city_id = ""
