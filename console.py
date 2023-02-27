@@ -2,6 +2,11 @@
 """define a class HBNBCommand that is a console"""
 import cmd
 from models.base_model import BaseModel
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.amenity import Amenity
 from models.__init__ import storage
 from models.user import User
 
@@ -24,7 +29,15 @@ class HBNBCommand(cmd.Cmd):
     
   def do_create(self, arg):
     """Creates a new instance of BaseModel, saves it, and prints the id"""
-    list_of_class = {'BaseModel': BaseModel, 'User': User}
+    list_of_class = {
+        "BaseModel": BaseModel,
+        "Place": Place,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Review": Review,
+        "User" : User
+        }
     if arg == "":
       print("** class name missing **")
       return
@@ -37,8 +50,8 @@ class HBNBCommand(cmd.Cmd):
         print(arg.id)
       
   def do_show(self, arg):
-    """"""
-    list_of_class = ['BaseModel', 'User']
+    """Prints the string representation of an instance based on the class name"""
+    list_of_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
     args = arg.split()
     if len(args) == 0:
       class_of_instance = ""
@@ -62,8 +75,8 @@ class HBNBCommand(cmd.Cmd):
         print(storage.all()[key])
           
   def do_destroy(self, arg):
-    """"""
-    list_of_class = ['BaseModel', 'User']
+    """Deletes an instance based on the class name and id"""
+    list_of_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
     args = arg.split()
     if len(args) == 0:
       class_of_instance = ""
@@ -89,18 +102,36 @@ class HBNBCommand(cmd.Cmd):
         print("** no instance found **")
 
   def do_all(self, arg):
-    """"""
+    """Prints all string representation of all instances"""
+    list_of_class = {
+        "BaseModel": BaseModel,
+        "Place": Place,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Review": Review,
+        "User" : User
+        }
     my_list = []
     if arg == "":
       for key, value in storage.all().items():
-        my_list.append(BaseModel.__str__(value))
+        class_name = key.split('.')[0]
+        my_list.append(list_of_class[class_name].__str__(value))
       print(my_list)
-    #Añadir para más clases (Ejemplo: all Auto)
+      return
+    if arg not in list_of_class.keys():
+      print("** class doesn't exist **")
+      return
+    for key, value in storage.all().items():
+      class_name = key.split('.')[0]
+      if arg == class_name:
+        my_list.append(list_of_class[class_name].__str__(value))
+        print(my_list)
 
   def do_update(self, arg):
-    """"""
+    """Updates an instance based on the class name and id"""
     args = arg.split()
-    list_of_class = ['BaseModel', 'User']
+    list_of_class = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
     if len(args) == 0:
       class_of_instance = ""
     else:
