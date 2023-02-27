@@ -1,21 +1,23 @@
 #!/usr/bin/python3
 import unittest
 from models.base_model import BaseModel
+from models import storage
 
 
 class TestBaseModel(unittest.TestCase):
     def test_save(self):
         bm = BaseModel()
-        old_date = bm.updated_at
         bm.save()
-        new_date = bm.updated_at
-        self.assertNotEqual(old_date, new_date)
+        key = f"{bm.__class__.__name__}.{bm.id}"
+        obj_dict = storage.all()[key].to_dict()
+        self.assertEqual(bm.updated_at.isoformat(), obj_dict['updated_at'])
 
     def test_to_dict(self):
         bm = BaseModel()
         new_dict = bm.to_dict()
-        dictionary = {}
-        self.assertEqual(type(new_dict), type(dictionary))
+        self.assertEqual(new_dict['__class__'], bm.__class__.__name__)
+        self.assertEqual(new_dict['created_at'], (bm.created_at).isoformat())
+        self.assertEqual(new_dict['updated_at'], (bm.updated_at).isoformat())
 
     def test_id(self):
         bm = BaseModel()
