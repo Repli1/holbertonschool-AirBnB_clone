@@ -5,32 +5,32 @@ from models.base_model import BaseModel
 
 
 class TestFileStorage(unittest.TestCase):
-    def test_file_path:
+    def test_file_path(self):
         fs = FileStorage()
         self.assertEqual(fs.__file_path, "savefile.json")
 
-    def test_objects:
+    def test_objects(self):
         fs = FileStorage()
         self.assertEqual(type(fs.__objects), dict)
 
-    def test_all:
+    def test_all(self):
         fs = FileStorage()
         self.assertEqual(fs.all(), fs.__objects)
 
-    def test_new:
+    def test_new(self):
         bm = BaseModel()
         fs = FileStorage()
         fs.new(bm)
         self.assertEqual(fs.all(), fs.__objects)
 
-    def test_save:
+    def test_save(self):
         bm = BaseModel()
         fs = FileStorage()
         fs.new(bm)
         fs.save()
         self.assertEqual(fs.all(), fs.__objects)
 
-    def test_reload:
+    def test_reload(self):
         bm = BaseModel()
         fs = FileStorage()
         fs.new(bm)
@@ -38,8 +38,8 @@ class TestFileStorage(unittest.TestCase):
         fs.reload()
         self.assertEqual(fs.all(), fs.__objects)
 
-    def test_base_model:
+    def test_base_model(self):
         bm = BaseModel()
 
-    def test_base_save:
+    def test_base_save(self):
         bm = BaseModel()

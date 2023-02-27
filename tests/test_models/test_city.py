@@ -4,6 +4,6 @@ from models.city import City
 
 
 class TestCity(unittest.TestCase):
-    def test_city:
+    def test_city(self):
         ct = City()
-        self.assert(ct.name, "")
+        self.assertEqual(ct.name, "")

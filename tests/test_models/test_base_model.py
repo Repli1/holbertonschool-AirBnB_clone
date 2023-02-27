@@ -14,7 +14,8 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         bm = BaseModel()
         new_dict = bm.to_dict()
-        self.assertEqual(type(new_dict), dict)
+        dictionary = {}
+        self.assertEqual(type(new_dict), type(dictionary))
 
     def test_id(self):
         bm = BaseModel()
