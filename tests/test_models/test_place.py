@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 import unittest
+from models.place import Place
 
-class TestBaseModel(unittest.TestCase):
 
+class TestPlace(unittest.TestCase):
+    def test_place:
+        pl = Place()
+        self.assertEqual(pl.name, "")

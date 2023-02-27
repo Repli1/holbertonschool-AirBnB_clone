@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 import unittest
+from models.review import Review
 
-class TestBaseModel(unittest.TestCase):
 
+class TestReview(unittest.TestCase):
+    def test_review:
+        rv = Review()
+        self.assertEqual(rv.text, "")
