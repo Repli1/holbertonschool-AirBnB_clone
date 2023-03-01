@@ -28,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel, saves it, and prints the id"""
+        """Creates a new instance of a class, saves it, and prints the id"""
         list_of_class = {
             "BaseModel": BaseModel,
             "Place": Place,
@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             for key, value in storage.all().items():
                 class_name = key.split('.')[0]
                 my_list.append(list_of_class[class_name].__str__(value))
-                print(my_list)
+            print(my_list)
             return
         if arg not in list_of_class.keys():
             print("** class doesn't exist **")
